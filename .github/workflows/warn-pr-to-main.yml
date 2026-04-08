@@ -1,0 +1,17 @@
+name: Warn if PR to main does not come from dev branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from dev
+        run: |
+          if [[ "${{ github.head_ref }}" != "dev" ]]; then
+            echo "Pull requests to main must come from the dev branch."
+            exit 1
+          fi
